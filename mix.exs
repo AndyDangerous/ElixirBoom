@@ -8,10 +8,10 @@ defmodule Boom.Mixfile do
      version: "0.1.0",
      target: @target,
      archives: [nerves_bootstrap: "~> 0.2.1"],
-     
+
      deps_path: "deps/#{@target}",
      build_path: "_build/#{@target}",
-     
+
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      aliases: aliases(),
@@ -23,11 +23,14 @@ defmodule Boom.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {Boom, []},
-     applications: [:logger]]
+     applications: [:logger, :nerves_leds]]
   end
 
   def deps do
-    [{:nerves, "~> 0.4.0"}]
+    [
+      {:nerves, "~> 0.4.0"},
+      {:nerves_leds, "~> 0.8.0"},
+    ]
   end
 
   def system(target) do

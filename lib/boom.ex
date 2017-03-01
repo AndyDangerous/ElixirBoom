@@ -9,6 +9,7 @@ defmodule Boom do
     # Define workers and child supervisors to be supervised
     children = [
       # worker(Boom.Worker, [arg1, arg2, arg3]),
+      worker(Task, [fn -> blinker() end], id: Boom.Blinker),
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
@@ -17,4 +18,11 @@ defmodule Boom do
     Supervisor.start_link(children, opts)
   end
 
+  def blinker() do
+    Nerves.Leds.set green: true
+    :timer.sleep 200
+    Nerves.Leds.set green: false
+    :timer.sleep 200
+    blinker()
+  end
 end
